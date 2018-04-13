@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.get('/', (req,res) => {
-    res.render('index')
+    res.render('index');
 });
 
 app.get('/about', (req,res) => {
@@ -50,7 +50,16 @@ app.post('/ideas',(req,res) => {
         });
     }
     else{
-        res.send('passed')
+        const newUser ={
+            title: req.body.title,
+            details: req.body.details,
+        }
+
+        new Idea(newUser)
+        .save()
+        .then(idea => {
+            res.redirect('/ideas')
+        });
     }
 
 });
